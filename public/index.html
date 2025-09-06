@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bruhChat</title></title>
+    <title>Quichat</title>
     <link href="style.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"
         integrity="sha512-Xm9qbB6Pu06k3PUwPj785dyTl6oHxgsv9nHp7ej7nCpAqGZT3OZpsELuCYX05DdonFpTlBpXMOxjavIAIUwr0w=="
@@ -17,29 +17,43 @@
 
 <body>
     
-    <main>
-        
-        <form class="form-join">
-            <input autocomplete="off" type="text" id="name" maxlength="8" placeholder="Your name" size="5" required>
-            <input autocomplete="off" type="text" id="room" placeholder="Chat room" size="5" required>
-            <button id="join" type="submit">Join</button>
-        </form>
+    <main class="app">
+        <header class="app__header">
+            <div class="brand">
+                <div class="brand__logo" aria-hidden="true">Q</div>
+                <h1 class="brand__title">Quichat</h1>
+            </div>
 
-        <ul class="chat-display">
-            <form class="form-msg">
-                <input autocomplete="off" type="text" id="message" placeholder="Your message" required>
-                <button type="submit">Send</button>
+            <form class="form-join" aria-label="Join chat">
+                <input autocomplete="off" type="text" id="name" maxlength="20" placeholder="Your name" required readonly>
+                <!-- Join button removed - auto-join on page load -->
             </form>
-        </ul>
-        <div class="pop-msg">
-            <p class="user-list"></p>
-    
-            <p class="room-list"></p>
-    
-            <p class="activity"></p>
-        </div>
 
-       
+            <div class="header-actions">
+                <!-- Edit name button removed - click name to edit -->
+                <span class="room-badge">Room: <strong>public</strong></span>
+                <div class="users-dropdown">
+                    <button class="users-toggle" aria-label="Show users">
+                        <span>Users</span>
+                        <span class="users-count" id="users-count">0</span>
+                    </button>
+                    <div class="users-panel" id="users-panel">
+                        <div class="users-list" id="users-list">—</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="app__body">
+            <section class="chat-card">
+                <ul class="chat-display" aria-live="polite"></ul>
+
+                <form class="form-msg" aria-label="Send message">
+                    <input autocomplete="off" type="text" id="message" placeholder="" required>
+                    <button type="submit" class="btn btn--accent">Send</button>
+                </form>
+            </section>
+        </div>
     </main>
 </body>
 

@@ -34,9 +34,6 @@ const io = new Server(expressServer, {
 io.on('connection', socket => {
     console.log(`User ${socket.id} connected`)
 
-    // Upon connection - only to user 
-    socket.emit('message', buildMsg(ADMIN, "Chat here!"))
-
     socket.on('enterRoom', ({ name, room }) => {
 
         // leave previous room 
@@ -111,6 +108,23 @@ io.on('connection', socket => {
             socket.broadcast.to(room).emit('activity', name)
         }
     })
+
+    // Handle name changes
+    socket.on('changeName', ({ name, room }) => {
+        const user = getUser(socket.id)
+        if (user) {
+            const oldName = user.name
+            user.name = name
+            
+            // Notify room about name change
+            io.to(user.room).emit('message', buildMsg(ADMIN, `${oldName} changed their name to ${name}`))
+            
+            // Update user list
+            io.to(user.room).emit('userList', {
+                users: getUsersInRoom(user.room)
+            })
+        }
+    })
 })
 
 function buildMsg(name, text) {
@@ -118,9 +132,9 @@ function buildMsg(name, text) {
         name,
         text,
         time: new Intl.DateTimeFormat('default', {
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric'
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
         }).format(new Date())
     }
 }
