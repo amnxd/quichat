@@ -247,7 +247,7 @@ body{
     white-space: pre-wrap;
     font-size: 1rem; /* Larger message text */
     font-weight: 600; /* Bold message text */
-    line-height: 1.3; /* Comfortable line spacing */
+    line-height: 1.1; /* Reduced line spacing */
     word-wrap: break-word;
 }
 

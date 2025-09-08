@@ -1,4 +1,4 @@
-const socket = io('https://chat.thebenevolent.in')   //  http://localhost:3500
+const socket = io('https://chat.thebenevolent.in')   //  http://localhost:3500 
 
 const msgInput = document.querySelector('#message')
 const nameInput = document.querySelector('#name')
@@ -58,11 +58,14 @@ if (nameInput) {
         }
     })
 
-    // Save name on blur (when clicking away) or Enter key
+    // Save name on blur (when clicking away)
     nameInput.addEventListener('blur', saveNameChange)
-    nameInput.addEventListener('keypress', (e) => {
+
+    // Save name on Enter key (and prevent form submission/reload)
+    nameInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
-            nameInput.blur() // This will trigger the blur event to save
+            e.preventDefault();
+            nameInput.blur(); // This will trigger the blur event to save
         }
     })
 }
